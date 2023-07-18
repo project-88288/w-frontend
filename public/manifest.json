@@ -1,15 +1,13 @@
 {
-  "short_name": "Interchain App",
-  "name": "My Interchain App",
+  "short_name": "Station",
+  "name": "Terra Station",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "128x128"
     }
   ],
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "display": "fullscreen"
 }

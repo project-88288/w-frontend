@@ -1,29 +1,39 @@
+import { useWallet, WalletStatus } from '@terra-money/wallet-provider';
 import React from 'react';
-import { useConnectedWallet, useWallet } from '@terra-money/wallet-kit';
+export default function Connect() {
+  const {
+    status,
+    network,
+    wallets,
+    availableConnectTypes,
+    connect,
+    disconnect,
+  } = useWallet();
 
-function Connect() {
-  const connectedWallet = useConnectedWallet();
-  const { connect, disconnect, availableWallets } = useWallet();
-
+  const chainID = 'phoenix-1'; // or any other mainnet or testnet chainID supported by station (e.g. osmosis-1)
   return (
-    <section>
-      <h4>Connect info:</h4>
-      {connectedWallet ? (
-        <>
-          <button onClick={() => disconnect()}>Disconnect</button>
-          <code>
-            <pre>{JSON.stringify(connectedWallet, null, 2)}</pre>
-          </code>
-        </>
-      ) : (
-        availableWallets.map(({ id, name, isInstalled }) => (
-          <button onClick={() => connect(id)} disabled={!isInstalled} key={id}>
-            Connect {name}
-          </button>
-        ))
+    <>
+      {JSON.stringify(
+        { status, network: network[chainID], wallets },
+        null,
+        2,
       )}
-    </section>
+      {status === WalletStatus.WALLET_NOT_CONNECTED && (
+        <>
+          {availableConnectTypes.map((connectType) => (
+            <button
+              key={'connect-' + connectType}
+              onClick={() => connect(connectType)}
+            >
+              Connect {connectType}
+            </button>
+          ))}
+        </>
+      )}
+      {status === WalletStatus.WALLET_CONNECTED && (
+        <button onClick={() => disconnect()}>Disconnect</button>
+      )}
+    </>
   );
 }
 
-export default Connect;

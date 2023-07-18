@@ -1,26 +1,32 @@
-import { useConnectedWallet, useLcdClient } from '@terra-money/wallet-kit';
+import {
+  useConnectedWallet,
+  useLCDClient,
+} from '@terra-money/wallet-provider';
 import React, { useEffect, useState } from 'react';
 
 export default function Query() {
-  const lcd = useLcdClient(); // LCD stands for Light Client Daemon
-  const connected = useConnectedWallet();
-  const [balance, setBalance] = useState('');
+  const lcd = useLCDClient(); // LCD stands for Light Client Daemon
+  const connectedWallet = useConnectedWallet();
+  const [balance, setBalance] = useState<null | string>(null);
   const chainID = 'phoenix-1'; // or any other mainnet or testnet chainID supported by station (e.g. osmosis-1)
 
   useEffect(() => {
-    if (connected) {
-      lcd.bank.balance(connected.addresses[chainID]).then(([coins]) => {
-        setBalance(coins.toString());
-      });
+    if (connectedWallet) {
+      lcd.bank
+        .balance(connectedWallet.addresses[chainID])
+        .then(([coins]) => {
+          setBalance(coins.toString());
+        });
     } else {
-      setBalance('');
+      setBalance(null);
     }
-  }, [connected, lcd]); // useEffect is called when these variables change
+  }, [connectedWallet, lcd]); // useEffect is called when these variables change
 
   return (
     <div>
       {balance && <p>{balance}</p>}
-      {!connected && <p>Wallet not connected!</p>}
+      {!connectedWallet && <p>Wallet not connected!</p>}
     </div>
   );
 }
+

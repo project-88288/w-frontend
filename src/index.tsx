@@ -1,16 +1,17 @@
-import { getInitialConfig, WalletProvider } from "@terra-money/wallet-kit";
-import App from "./App";
-import ReactDOM from "react-dom";
-import "./index.css";
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import {
+  getChainOptions,
+  WalletProvider,
+} from '@terra-money/wallet-provider';
 
-getInitialConfig().then((config) => {
+getChainOptions().then((chainOptions) => {
   ReactDOM.render(
-    <WalletProvider defaultNetworks={config}>
+    <WalletProvider {...chainOptions}>
       <App />
     </WalletProvider>,
-    document.getElementById("root")
+    document.getElementById('root'),
   );
 });
-
-
 

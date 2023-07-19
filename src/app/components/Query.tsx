@@ -2,7 +2,7 @@ import {
   useConnectedWallet,
   useLCDClient,
 } from '@terra-money/wallet-provider';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Query() {
   const lcd = useLCDClient(); // LCD stands for Light Client Daemon

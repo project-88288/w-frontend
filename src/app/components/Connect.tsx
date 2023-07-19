@@ -1,5 +1,5 @@
 import { useWallet, WalletStatus } from '@terra-money/wallet-provider';
-import React from 'react';
+//import React from 'react';
 export default function Connect() {
   const {
     status,

@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import Layout, { Header, Sidebar } from 'components/layout/Layout';
+import { Header, Layout, Sidebar, Content } from 'components/layout';
 import './App.css';
 // eslint-disable-next-line
 import Connect from './components/Connect';
@@ -10,8 +10,9 @@ import Nav from './sections/Nav';
 // eslint-disable-next-line
 import Aside from './sections/Aside';
 
+/*
 // eslint-disable-next-line
-function Appx() {
+function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -19,24 +20,25 @@ function Appx() {
     </div>
   );
 }
-
+*/
 // eslint-disable-next-line
 function App() {
   return (
     <Layout>
       <Sidebar>
-        <Appx />
         <Nav />
-        <Aside/>
-        <Appx />
+        <Aside />
       </Sidebar>
-
+<Header>
+<Aside />
+</Header>
+      <Content>
+        <Aside />
+      </Content>
     </Layout>
   );
 }
-
 /*
-
 function App() {
   return (
     <div className="App">

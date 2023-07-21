@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next"
 import classNames from "classnames"
 // eslint-disable-next-line
 import { formatNumber } from "@terra.kitchen/utils"
-import { Flex } from "components/flex"
+import { Flex } from "components/layout"
 import styles from "./LastHeight.module.scss"
 
 const LastHeight = () => {
@@ -19,7 +19,7 @@ const LastHeight = () => {
         )}
       />
       {height ? (
-        <p className={styles.text}>{`=${height} block`}
+        <p className={styles.text}>{`aside block`}
           #{formatNumber(height, { comma: true })}
         </p>
       ) : (

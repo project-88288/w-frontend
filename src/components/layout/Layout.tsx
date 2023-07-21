@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react"
 import { atom, useRecoilValue } from "recoil"
 import classNames from "classnames/bind"
 import styles from "./Layout.module.scss"
-import { Container } from "components/container"
+import { Container } from "."
 
 const cx = classNames.bind(styles)
 
@@ -39,6 +39,7 @@ export const Content = ({ children }: PropsWithChildren<{}>) => {
 }
 
 const Layout = ({ children }: PropsWithChildren<{}>) => {
+  console.log('LAYOUT')
   // eslint-disable-next-line
   const isMenuOpen = useRecoilValue(mobileIsMenuOpenState)
   return (

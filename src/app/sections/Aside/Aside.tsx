@@ -5,7 +5,7 @@ import Links from "app/sections/Links"
 // eslint-disable-next-line
 import styles from "./Aside.module.scss"
 // eslint-disable-next-line
-import { Grid } from "components/grid"
+import { Grid } from "components/layout"
 import classNames from "classnames"
 // eslint-disable-next-line
 const cx = classNames.bind(styles)

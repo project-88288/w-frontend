@@ -1,28 +1,57 @@
-//import { useEffect } from "react"
-//import { NavLink, useLocation } from "react-router-dom"
-// eslint-disable-next-line
-import { useRecoilState } from "recoil"
-//import classNames from "classnames/bind"
-//import MenuIcon from "@mui/icons-material/Menu"
-//import CloseIcon from "@mui/icons-material/Close"
-// eslint-disable-next-line
+import { useEffect } from "react"
+import { NavLink, useLocation } from "react-router-dom"
+import { useRecoilState, useSetRecoilState } from "recoil"
+import classNames from "classnames"
+import MenuIcon from "@mui/icons-material/Menu"
+import CloseIcon from "@mui/icons-material/Close"
 import { mobileIsMenuOpenState } from "components/layout"
-//import { useNav } from "app/routes"
-//import styles from "./Nav.module.scss"
+import { useNav } from "app/routes"
+import styles from "./Nav.module.scss"
 
-//const cx = classNames.bind(styles)
+const cx = classNames.bind(styles)
+
 const Nav = () => {
-  console.log('NAV')
+  useCloseMenuOnNavigate()
+  const { menu } = useNav()
+  const [isOpen, setIsOpen] = useRecoilState(mobileIsMenuOpenState)
+  const toggle = () => setIsOpen(!isOpen)
+
   return (
     <nav>
-      <ul>
-        <li>Home</li>
-        <li>About</li>
-        <li>Contact</li>
-      </ul>
+      <header className={styles.header}>
+        <NavLink to="/" className={classNames(styles.item, styles.logo)}>
+          <strong>Terra</strong> Station
+        </NavLink>
+
+        <button className={styles.toggle} onClick={toggle}>
+          {isOpen ? <CloseIcon /> : <MenuIcon />}
+        </button>
+      </header>
+
+      {menu.map(({ path, title, icon }) => (
+        <NavLink
+          to={`${path}`}
+          className={({ isActive }) =>
+            cx(styles.item, styles.link, { active: isActive })
+          }
+          key={path}
+        >
+          {icon}
+          {title}
+        </NavLink>
+      ))}
     </nav>
-  );
+  )
 }
 
 export default Nav
 
+/* hooks */
+const useCloseMenuOnNavigate = () => {
+  const { pathname } = useLocation()
+  const setIsOpen = useSetRecoilState(mobileIsMenuOpenState)
+
+  useEffect(() => {
+    setIsOpen(false)
+  }, [pathname, setIsOpen])
+}

@@ -1,4 +1,4 @@
-// eslint-disable-next-line
+
 import { Header, Layout, Sidebar, Content } from 'components/layout';
 import './App.css';
 // eslint-disable-next-line
@@ -7,33 +7,22 @@ import Connect from './components/Connect';
 import Query from './components/Query';
 // eslint-disable-next-line
 import Nav from './sections/Nav';
-// eslint-disable-next-line
 import Aside from './sections/Aside';
+import { useNav } from './routes';
 
-/*
-// eslint-disable-next-line
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-    </div>
-  );
-}
-*/
-// eslint-disable-next-line
-function App() {
+  const { element: routes } = useNav()
   return (
     <Layout>
       <Sidebar>
         <Nav />
         <Aside />
       </Sidebar>
-<Header>
-<Aside />
-</Header>
-      <Content>
+      <Header>
         <Aside />
+      </Header>
+      <Content>
+        {routes}
       </Content>
     </Layout>
   );

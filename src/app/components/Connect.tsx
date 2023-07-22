@@ -1,22 +1,33 @@
 import { useWallet, WalletStatus } from '@terra-money/wallet-provider';
+// eslint-disable-next-line
+import { useNetworkState } from 'data/wallet';
 //import React from 'react';
 export default function Connect() {
   const {
     status,
-    network,
     wallets,
     availableConnectTypes,
     connect,
     disconnect,
   } = useWallet();
 
-  const chainID = 'phoenix-1'; // or any other mainnet or testnet chainID supported by station (e.g. osmosis-1)
+  // eslint-disable-next-line
+  const state = useNetworkState()
+  let address = ''
+  wallets.forEach(element => {
+    address = element.addresses[state[0]]
+  })
+  // eslint-disable-next-line
+  const chainID = state[0]; // or any other mainnet or testnet chainID supported by station (e.g. osmosis-1)
   return (
     <>
-      {JSON.stringify(
-        { status, network: network[chainID], wallets },
-        null,
-        2,
+      { }
+      {status === WalletStatus.WALLET_CONNECTED && (
+        JSON.stringify(
+          { address },
+          null,
+          2,
+        )
       )}
       {status === WalletStatus.WALLET_NOT_CONNECTED && (
         <>

@@ -39,11 +39,10 @@ export const Content = ({ children }: PropsWithChildren<{}>) => {
 }
 
 const Layout = ({ children }: PropsWithChildren<{}>) => {
-  console.log('LAYOUT')
   // eslint-disable-next-line
   const isMenuOpen = useRecoilValue(mobileIsMenuOpenState)
   return (
-    <div className={cx(styles.layout, { menu: true })}>{children}</div>
+    <div className={cx(styles.layout, { menu: isMenuOpen })}>{children}</div>
   )
 }
 

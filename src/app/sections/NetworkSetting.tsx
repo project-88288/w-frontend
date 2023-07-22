@@ -1,25 +1,26 @@
-import { useTranslation } from "react-i18next"
-// eslint-disable-next-line
-import { useNetworkOptions, useNetworkState } from "data/wallet"
-import { useCustomNetworks } from "data/settings/CustomNetworks"
-// eslint-disable-next-line
-import { InternalLink } from "components/layout"
+
+import { useNetworkState } from "data/wallet"
 import { RadioGroup } from "components/form"
-import { Networks } from "config/networks"
+import { useWallet } from "@terra-money/wallet-provider"
 
 const NetworkSetting = () => {
-  // eslint-disable-next-line
-  const { t } = useTranslation()
-  const [network, setNetwork] = useNetworkState()
-  // eslint-disable-next-line
-  const { list } = useCustomNetworks()
 
+  const { network: _network } = useWallet()
+  const n_list = Object.values(_network)
+  const n_array = n_list.map(o => o.chainID)
+  let _list: Record<string, any> = {}
+  n_array.forEach(element => {
+    _list[element] = { value: element, label: element }
+  })
+
+  const [network, setNetwork] = useNetworkState()
+ 
   return (
-      <RadioGroup
-        options={Object.values(Networks)}
-        value={network}
-        onChange={setNetwork}
-      />
+    <RadioGroup
+      options={Object.values(_list)}
+      value={network}
+      onChange={setNetwork}
+    />
   )
 }
 

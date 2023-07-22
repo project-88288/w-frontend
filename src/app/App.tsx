@@ -14,6 +14,9 @@ import { Refresh } from '@mui/icons-material';
 import  DevTools from './sections/DevTools';
 import LanguagePreferences from './sections/LanguagePreferences';
 import NetworkPreferences from './sections/NetworkPreferance';
+import NetworkName from './sections/NetworkName';
+//import { ConnectWallet } from './components/ConnectWallet';
+import ConnectWallet from './sections/ConnectWallet';
 
 function App() {
   const { element: routes } = useNav()
@@ -24,7 +27,8 @@ function App() {
         <Aside />
       </Sidebar>
       <Header>
-        <Aside />
+      <NetworkName />
+        
         <Actions>
           <section>
             <Refresh />
@@ -32,9 +36,11 @@ function App() {
             <LanguagePreferences/>
           </section>
         </Actions>
+        <ConnectWallet/>
       </Header>
       <Content>
         {routes}
+        <Connect />
       </Content>
     </Layout>
   );

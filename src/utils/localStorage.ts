@@ -1,8 +1,8 @@
 import { DEFAULT_GAS_ADJUSTMENT, CLASSIC_DEFAULT_GAS_ADJUSTMENT } from "config/constants"
-//import themes from "styles/themes/themes"
+import themes from "styles/themes/themes"
 
 export enum SettingKey {
- // Theme = "Theme",
+  Theme = "Theme",
   Currency = "Currency",
   CustomNetworks = "CustomNetworks",
   GasAdjustment = "GasAdjustment", // Tx
@@ -16,13 +16,13 @@ export enum SettingKey {
 const isSystemDarkMode =
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
 
-//export const DefaultTheme = themes[Number(isSystemDarkMode)]
+export const DefaultTheme = themes[Number(isSystemDarkMode)]
 
 export const DefaultCustomTokensItem = { ibc: [], cw20: [], cw721: [] }
 const DefaultCustomTokens = { mainnet: DefaultCustomTokensItem }
 
 export const DefaultSettings = {
- // [SettingKey.Theme]: DefaultTheme,
+  [SettingKey.Theme]: DefaultTheme,
   [SettingKey.Currency]: "uusd",
   [SettingKey.CustomNetworks]: [] as CustomNetwork[],
   [SettingKey.GasAdjustment]: DEFAULT_GAS_ADJUSTMENT,

@@ -1,26 +1,35 @@
-
-import { useNetworkState } from "data/wallet"
+import { useTranslation } from "react-i18next"
+import { useNetworkOptions, useNetworkState } from "data/wallet"
+import { useCustomNetworks } from "data/settings/CustomNetworks"
+import { InternalLink } from "components/general"
 import { RadioGroup } from "components/form"
-import { useWallet } from "@terra-money/wallet-provider"
 
 const NetworkSetting = () => {
-
-  const { network: _network } = useWallet()
-  const n_list = Object.values(_network)
-  const n_array = n_list.map(o => o.chainID)
-  let _list: Record<string, any> = {}
-  n_array.forEach(element => {
-    _list[element] = { value: element, label: element }
-  })
-
+  const { t } = useTranslation()
   const [network, setNetwork] = useNetworkState()
- 
+  const networkOptions = useNetworkOptions()
+  const { list } = useCustomNetworks()
+
+  if (!networkOptions) return null
+
   return (
-    <RadioGroup
-      options={Object.values(_list)}
-      value={network}
-      onChange={setNetwork}
-    />
+    <>
+      <RadioGroup
+        options={networkOptions}
+        value={network}
+        onChange={setNetwork}
+      />
+
+      {list.length ? (
+        <InternalLink to="/networks" chevron>
+          {t("Manage networks")}
+        </InternalLink>
+      ) : (
+        <InternalLink to="/network/new" chevron>
+          {t("Add a network")}
+        </InternalLink>
+      )}
+    </>
   )
 }
 

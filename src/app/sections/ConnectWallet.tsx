@@ -3,14 +3,15 @@ import UsbIcon from "@mui/icons-material/Usb"
 import { useWallet } from "@terra-money/wallet-provider"
 import { STATION } from "config/constants"
 import { RenderButton } from "types/components"
-//import { useAddress } from "data/wallet"
-import { Button, ExternalLink } from "components/layout"
+import { useAddress } from "data/wallet"
+import { Button, ExternalLink } from "components/general"
 import { Grid } from "components/layout"
 import { List } from "components/display"
 import { ModalButton } from "components/feedback"
 import { FormHelp } from "components/form"
-import Connect from "app/components/Connect"
-//import Connected from "./Connected"
+import { useAuth } from "auth"
+import SwitchWallet from "auth/modules/select/SwitchWallet"
+import Connected from "./Connected"
 
 interface Props {
   renderButton?: RenderButton
@@ -19,10 +20,11 @@ interface Props {
 const ConnectWallet = ({ renderButton }: Props) => {
   const { t } = useTranslation()
 
-  const { connect, availableConnections, availableInstallations,status } = useWallet()
-  if(status==='WALLET_CONNECTED') return <Connect />
-  console.log(status)
- // const { available } = useAuth()
+  const { connect, availableConnections, availableInstallations } = useWallet()
+  const { available } = useAuth()
+
+  const address = useAddress()
+  if (address) return <Connected />
 
   const defaultRenderButton: Props["renderButton"] = (open) => (
     <Button onClick={open} size="small" outline>
@@ -55,9 +57,9 @@ const ConnectWallet = ({ renderButton }: Props) => {
       maxHeight
     >
       <Grid gap={20}>
-        
-        <List list={list} />
-        { (
+        <SwitchWallet />
+        <List list={available.length ? available : list} />
+        {!!available.length && (
           <FormHelp>
             Use <ExternalLink href={STATION}>Terra Station</ExternalLink> on the
             browser to access with Ledger device

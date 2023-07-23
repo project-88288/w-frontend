@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { Link, To } from "react-router-dom"
-import { ExternalLink } from "components/layout"
+import { ExternalLink } from "../general"
 import styles from "./List.module.scss"
 
 interface InternalLinkItem {

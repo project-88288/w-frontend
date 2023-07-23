@@ -1,0 +1,161 @@
+import { AccAddress } from "@terra-money/terra.js"
+import { combineState } from "data/query"
+import { useCustomTokensIBC } from "data/settings/CustomTokens"
+import { useCustomTokensCW20 } from "data/settings/CustomTokens"
+import { useIBCWhitelist, useCW20Whitelist } from "data/Terra/TerraAssets"
+import { useOpzCW20Whitelist, useOpzIBCWhitelist } from "data/moneies/OpzAssets"
+import { useTokenInfoCW20 } from "data/queries/wasm"
+import { Fetching } from "components/feedback"
+import WithSearchInput from "./WithSearchInput"
+import TokenList from "./TokenList"
+
+interface Props {
+  whitelist: { ibc: IBCWhitelist; cw20: CW20Whitelist }
+  keyword: string
+}
+
+const Component = ({ whitelist, keyword }: Props) => {
+  let ibc = useCustomTokensIBC()
+  let cw20 = useCustomTokensCW20()
+  let cw20s = whitelist.cw20
+  let ibcs = whitelist.ibc
+  const { data: opzibc } = useOpzIBCWhitelist()
+  const { data: opzcw20 } = useOpzCW20Whitelist()
+
+  if (cw20s && opzcw20) {
+    const cw20arr = Object.values<CW20TokenItem>(cw20s)
+    const opzcw20arr = Object.values<CW20TokenItem>(opzcw20)
+    const cw20arr_ = cw20arr.filter(
+      (obj) => !opzcw20arr.some((obj_) => obj.token === obj_.token)
+    )
+    cw20s = cw20arr_.reduce((result: Record<string, {}>, obj) => {
+      result[obj.token] = obj
+      return result
+    }, {}) as CW20Whitelist
+    cw20.list = cw20arr_
+  }
+
+  if (ibcs && opzibc) {
+    const ibcarr = Object.values<IBCTokenItem>(ibcs)
+    const opzibcarr = Object.values<IBCTokenItem>(opzibc)
+    const ibcarr_ = ibcarr.filter(
+      (obj) => !opzibcarr.some((obj_) => obj.denom === obj_.denom)
+    )
+    ibcs = ibcarr_.reduce((result: Record<string, {}>, obj) => {
+      result[obj.denom] = obj
+      return result
+    }, {}) as IBCWhitelist
+    ibc.list = ibcarr_
+  }
+
+  type AddedIBC = Record<string, IBCTokenItem>
+  type AddedCW20 = Record<TerraAddress, CW20TokenItem>
+  const added = {
+    ibc: ibc.list.reduce<AddedIBC>(
+      (acc, item) => ({ ...acc, [item.denom.replace("ibc/", "")]: item }),
+      {}
+    ),
+    cw20: cw20.list.reduce<AddedCW20>(
+      (acc, item) => ({ ...acc, [item.token]: item }),
+      {}
+    ),
+  }
+
+  const merged = {
+    ...added.ibc,
+    ...added.cw20,
+    ...ibcs,
+    ...cw20s,
+  }
+
+  // if listed
+  const listedItem = merged[keyword]
+
+  // if not listed
+  const { data: tokenInfo, ...state } = useTokenInfoCW20(
+    !listedItem ? keyword : ""
+  )
+
+  const responseItem = tokenInfo ? { token: keyword, ...tokenInfo } : undefined
+
+  // conclusion
+  const result = listedItem ?? responseItem
+
+  const results = AccAddress.validate(keyword)
+    ? result
+      ? [result]
+      : []
+    : Object.values(merged).filter((item) => {
+        if ("base_denom" in item) {
+          // IBC
+          const { base_denom } = item
+          return base_denom.includes(keyword.toLowerCase())
+        } else {
+          // CW20
+          const { symbol, name } = item
+          return [symbol, name].some((word) =>
+            word?.toLowerCase().includes(keyword.toLowerCase())
+          )
+        }
+      })
+
+  const manage = {
+    list: [...ibc.list, ...cw20.list],
+    getIsAdded: (item: CustomTokenIBC | CustomTokenCW20) => {
+      if ("base_denom" in item) return ibc.getIsAdded(item)
+      else return cw20.getIsAdded(item)
+    },
+    add: (item: CustomTokenIBC | CustomTokenCW20) => {
+      if ("base_denom" in item) return ibc.add(item)
+      else return cw20.add(item)
+    },
+    remove: (item: CustomTokenIBC | CustomTokenCW20) => {
+      if ("base_denom" in item) return ibc.remove(item)
+      else return cw20.remove(item)
+    },
+  }
+
+  const renderTokenItem = (item: CustomTokenIBC | CustomTokenCW20) => {
+    if ("base_denom" in item) {
+      const { symbol, denom, ...rest } = item
+      return { ...rest, token: denom, title: symbol, key: denom }
+    } else {
+      const { token, symbol, ...rest } = item
+      return { ...rest, token, title: symbol, contract: token, key: token }
+    }
+  }
+
+  return (
+    <TokenList
+      {...state}
+      {...manage}
+      results={results}
+      renderTokenItem={renderTokenItem}
+    />
+  )
+}
+
+const ManageCustomTokens = () => {
+  const { data: ibc, ...ibcWhitelistState } = useIBCWhitelist()
+  const { data: cw20, ...cw20WhitelistState } = useCW20Whitelist()
+
+  const state = combineState(ibcWhitelistState, cw20WhitelistState)
+
+  const render = () => {
+    if (!(ibc && cw20)) return null
+
+    return (
+      <WithSearchInput>
+        {(input) => <Component whitelist={{ ibc, cw20 }} keyword={input} />}
+      </WithSearchInput>
+    )
+  }
+
+  return (
+    <Fetching {...state} height={2}>
+      {render()}
+    </Fetching>
+  )
+}
+
+export default ManageCustomTokens

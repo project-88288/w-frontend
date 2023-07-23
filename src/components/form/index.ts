@@ -3,8 +3,8 @@ export * from "./Form"
 export * from "./FormHelp"
 
 /* components */
-//export { default as Input } from "./Input"
-//export * from "./Input"
+export { default as Input } from "./Input"
+export * from "./Input"
 export { default as TextArea } from "./TextArea"
 export * from "./TextArea"
 export { default as Select } from "./Select"

@@ -1,18 +1,15 @@
 import { useTranslation } from "react-i18next"
-// eslint-disable-next-line
 import DescriptionIcon from "@mui/icons-material/Description"
-// eslint-disable-next-line
 import { TUTORIAL } from "config/constants"
-//import { useIsClassic } from "data/query"
-//import { ExternalLink } from "components/general"
-//import { Contacts } from "components/layout"
+import { useIsClassic } from "data/query"
+import { ExternalLink } from "components/general"
+import { Contacts } from "components/layout"
 import styles from "./Links.module.scss"
 
 const Links = () => {
-  // eslint-disable-next-line
   const { t } = useTranslation()
-  const isClassic = false;// useIsClassic()
-// eslint-disable-next-line
+  const isClassic = useIsClassic()
+
   const community = isClassic
     ? {
         discord: "https://terra.sc/classicdiscord",
@@ -30,11 +27,14 @@ const Links = () => {
   return (
     <div className={styles.links}>
       <div className={styles.tutorial}>
- 
+        <ExternalLink href={TUTORIAL} className={styles.link}>
+          <DescriptionIcon style={{ fontSize: 18 }} />
+          {t("Tutorial")}
+        </ExternalLink>
       </div>
 
       <div className={styles.community}>
-      
+        <Contacts contacts={community} menu />
       </div>
     </div>
   )

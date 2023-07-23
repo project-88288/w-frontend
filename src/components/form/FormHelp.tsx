@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react"
-import classNames from "classnames"
+import classNames from "classnames/bind"
 import InfoIcon from "@mui/icons-material/Info"
 import { Flex } from "../layout"
 import styles from "./FormHelp.module.scss"

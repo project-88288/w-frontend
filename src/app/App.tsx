@@ -1,62 +1,75 @@
+import { getErrorMessage } from "utils/error"
+import Layout, { Page } from "components/layout"
 // eslint-disable-next-line
-import { Header, Layout, Sidebar, Content, Actions } from 'components/layout';
-import './App.css';
-// eslint-disable-next-line
-import Connect from './components/Connect';
-// eslint-disable-next-line
-import Query from './components/Query';
-// eslint-disable-next-line
-import Nav from './sections/Nav';
-import Aside from './sections/Aside';
-import { useNav } from './routes';
-import { Refresh } from '@mui/icons-material';
-// eslint-disable-next-line
-import  DevTools from './sections/DevTools';
-import LanguagePreferences from './sections/LanguagePreferences';
-import NetworkPreferences from './sections/NetworkPreferance';
-import NetworkName from './sections/NetworkName';
-//import { ConnectWallet } from './components/ConnectWallet';
-import ConnectWallet from './sections/ConnectWallet';
+import { Banner, Content, Header, Actions, Sidebar } from "components/layout"
+import { ErrorBoundary, Wrong } from "components/feedback"
 
-function App() {
+/* routes */
+import { useNav } from "./routes"
+
+/* banner */
+
+/* sidebar */
+import Nav from "./sections/Nav"
+import Aside from "./sections/Aside"
+
+/* header */
+import NetworkName from "./sections/NetworkName"
+// eslint-disable-next-line
+import IsClassicNetwork from "./sections/IsClassicNetwork"
+import Refresh from "./sections/Refresh"
+import Preferences from "./sections/Preferences"
+import SelectTheme from "./sections/SelectTheme"
+import ConnectWallet from "./sections/ConnectWallet"
+
+/* extra */
+import LatestTx from "./sections/LatestTx"
+import ValidatorButton from "./sections/ValidatorButton"
+import DevTools from "./sections/DevTools"
+
+/* init */
+import InitBankBalance from "./InitBankBalance"
+
+const App = () => {
   const { element: routes } = useNav()
+
   return (
     <Layout>
       <Sidebar>
         <Nav />
         <Aside />
       </Sidebar>
+
       <Header>
-      <NetworkName />
-        
+        <NetworkName />
+
         <Actions>
+          <DevTools />
           <section>
             <Refresh />
-            <NetworkPreferences/>
-            <LanguagePreferences/>
+            <Preferences />
+            <SelectTheme />
           </section>
+          <ValidatorButton />
+          <ConnectWallet />
         </Actions>
-        <ConnectWallet/>
+        <LatestTx />
       </Header>
+
       <Content>
-        {routes}
-        <Connect />
+        <ErrorBoundary fallback={fallback}>
+          <InitBankBalance>{routes}</InitBankBalance>
+        </ErrorBoundary>
       </Content>
     </Layout>
-  );
+  )
 }
-/*
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Connect />
-        <Query />
-      </header>
-    </div>
-  );
-}
-*/
-export default App;
 
+export default App
 
+/* error */
+export const fallback = (error: Error) => (
+  <Page>
+    <Wrong>{getErrorMessage(error)}</Wrong>
+  </Page>
+)

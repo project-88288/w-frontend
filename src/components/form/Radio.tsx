@@ -1,5 +1,5 @@
 import { PropsWithChildren, ReactNode } from "react"
-import classNames from "classnames"
+import classNames from "classnames/bind"
 import { Flex, Grid } from "../layout"
 import styles from "./Radio.module.scss"
 

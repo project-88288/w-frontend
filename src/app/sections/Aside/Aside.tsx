@@ -1,14 +1,7 @@
-// eslint-disable-next-line
-import LastHeight from "app/sections/LastHeight"
-// eslint-disable-next-line
-import Links from "app/sections/Links"
-// eslint-disable-next-line
-import styles from "./Aside.module.scss"
-// eslint-disable-next-line
 import { Grid } from "components/layout"
-import classNames from "classnames"
-// eslint-disable-next-line
-const cx = classNames.bind(styles)
+import LastHeight from "app/sections/LastHeight"
+import Links from "app/sections/Links"
+import styles from "./Aside.module.scss"
 
 const Aside = () => {
   return (

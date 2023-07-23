@@ -1,5 +1,5 @@
 import { ForwardedRef, forwardRef, SelectHTMLAttributes } from "react"
-import classNames from "classnames"
+import classNames from "classnames/bind"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import styles from "./Select.module.scss"
 

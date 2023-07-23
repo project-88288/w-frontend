@@ -1,10 +1,9 @@
-import { useNetworkState } from "data/wallet"
+import { useNetworkName } from "data/wallet"
 import styles from "./NetworkName.module.scss"
 
 const NetworkName = () => {
-  
-  const [ network ] = useNetworkState()
-  return <div className={styles.component}>{network.toUpperCase()}</div>
+  const name = useNetworkName()
+  return <div className={styles.component}>{name.toUpperCase()}</div>
 }
 
 export default NetworkName

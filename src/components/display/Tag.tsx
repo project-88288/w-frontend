@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react"
-import classNames from "classnames"
+import classNames from "classnames/bind"
 import { Color } from "types/components"
 import { InlineFlex } from "../layout"
 import styles from "./Tag.module.scss"

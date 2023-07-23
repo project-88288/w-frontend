@@ -1,14 +1,15 @@
 import { useTranslation } from "react-i18next"
 import classNames from "classnames"
-// eslint-disable-next-line
 import { formatNumber } from "@terra.kitchen/utils"
+import { useTerraObserver } from "data/Terra/TerraObserver"
+import { FinderLink } from "components/general"
 import { Flex } from "components/layout"
 import styles from "./LastHeight.module.scss"
 
 const LastHeight = () => {
-  // eslint-disable-next-line
   const { t } = useTranslation()
-  const height = 23;//block?.header.height
+  const { block } = useTerraObserver()
+  const height = block?.header.height
 
   return (
     <Flex gap={4} className={styles.component} start>
@@ -18,10 +19,11 @@ const LastHeight = () => {
           height ? styles.success : styles.loading
         )}
       />
+
       {height ? (
-        <p className={styles.text}>{`aside block`}
+        <FinderLink className={styles.link} value={height} block>
           #{formatNumber(height, { comma: true })}
-        </p>
+        </FinderLink>
       ) : (
         <p className={styles.text}>{t("Loading...")}</p>
       )}

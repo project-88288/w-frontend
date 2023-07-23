@@ -1,8 +1,8 @@
 import { ButtonHTMLAttributes } from "react"
 import { useTranslation } from "react-i18next"
+import { Button } from "../general"
 import { LoadingCircular } from "../feedback"
 import styles from "./Form.module.scss"
-import { Button } from "components/layout"
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   submitting?: boolean

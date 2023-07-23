@@ -34,10 +34,10 @@ export const useNetworkOptions = () => {
 export const useNetwork = (): CustomNetwork => {
   const networks = useNetworks()
   const network = useRecoilValue(networkState)
-  // eslint-disable-next-line
   const wallet = useWallet()
+
   if (sandbox) return networks[network] ?? networks.mainnet
-  return networks.mainnet
+  return wallet.network
 }
 
 export const useNetworkName = () => {

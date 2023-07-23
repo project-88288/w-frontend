@@ -1,5 +1,5 @@
 import { PropsWithChildren, ReactNode } from "react"
-import { Flex, Grid } from "components/layout"
+import { Flex, Grid } from "../layout"
 import styles from "./State.module.scss"
 
 interface Props {

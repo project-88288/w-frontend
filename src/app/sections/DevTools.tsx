@@ -1,6 +1,6 @@
 import { useQueryClient } from "react-query"
 import { debug } from "utils/env"
-import { Button } from "components/layout"
+import { Button } from "components/general"
 
 const DevTools = () => {
   const queryClient = useQueryClient()

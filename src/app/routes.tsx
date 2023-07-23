@@ -18,7 +18,7 @@ import History from "pages/history/History"
 import Stake from "pages/stake/Stake"
 import Governance from "pages/gov/Governance"
 import Contract from "pages/contract/Contract"
-import Developing from "pages/Developing"
+import Development from "pages/Development"
 
 /* details */
 import ValidatorDetails from "pages/stake/ValidatorDetails"
@@ -108,9 +108,9 @@ export const useNav = () => {
       icon: <ContractIcon {...ICON_SIZE} />,
     },
     {
-      path: "/developing",
-      element: <Developing />,
-      title: t("Developing"),
+      path: "/development",
+      element: <Development />,
+      title: t("Development"),
       icon: <ContractIcon {...ICON_SIZE} />,
     },
   ]

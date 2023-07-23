@@ -18,7 +18,8 @@ import NetworkName from "./sections/NetworkName"
 // eslint-disable-next-line
 import IsClassicNetwork from "./sections/IsClassicNetwork"
 import Refresh from "./sections/Refresh"
-import Preferences from "./sections/Preferences"
+import LPreferences from "./sections/L_Preferences"
+import NPreferences from "./sections/N_Preferences"
 import SelectTheme from "./sections/SelectTheme"
 import ConnectWallet from "./sections/ConnectWallet"
 
@@ -47,7 +48,8 @@ const App = () => {
           <DevTools />
           <section>
             <Refresh />
-            <Preferences />
+            <NPreferences />
+            <LPreferences />
             <SelectTheme />
           </section>
           <ValidatorButton />

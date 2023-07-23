@@ -1,17 +1,16 @@
 import { useTranslation } from "react-i18next"
-import LanguageIcon from "@mui/icons-material/Language"
-import { useIsClassic } from "data/query"
+import DomainIcon from "@mui/icons-material/Domain"
+//import { useIsClassic } from "data/query"
 import { Tabs } from "components/layout"
 import { Popover } from "components/display"
-import { sandbox } from "auth/scripts/env"
+//import { sandbox } from "auth/scripts/env"
 import PopoverNone from "../components/PopoverNone"
 import HeaderIconButton from "../components/HeaderIconButton"
 import NetworkSetting from "./NetworkSetting"
-import LanguageSetting from "./LanguageSetting"
+//import LanguageSetting from "./LanguageSetting"
 
-const Preferences = () => {
+const NPreferences = () => {
   const { t } = useTranslation()
-  const isClassic = useIsClassic()
 
   const network = {
     key: "network",
@@ -20,19 +19,7 @@ const Preferences = () => {
     condition: ["sandbox"],
   }
 
-  const lang = {
-    key: "lang",
-    tab: t("Language"),
-    children: <LanguageSetting />,
-    condition: undefined,
-  }
-
-  const tabs = [network, lang].filter(({ condition }) => {
-    if (!condition) return true
-    if (condition.includes("sandbox")) return sandbox
-    if (condition.includes("classic")) return isClassic
-    return true
-  })
+  const tabs = [network]
 
   return (
     <Popover
@@ -45,10 +32,10 @@ const Preferences = () => {
       theme="none"
     >
       <HeaderIconButton>
-        <LanguageIcon style={{ fontSize: 18 }} />
+        <DomainIcon style={{ fontSize: 18 }} />
       </HeaderIconButton>
     </Popover>
   )
 }
 
-export default Preferences
+export default NPreferences

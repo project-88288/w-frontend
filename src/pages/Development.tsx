@@ -11,13 +11,9 @@ export default function Development() {
   } = useWallet()
 
   const w_list = Object.values(wallets)
-  //const n_list = Object.values(network)
-  // const chains= network["chainID"]
   const chain = network.chainID //.map(o => o.chainID)
   const addesses = w_list.map((o) => o.terraAddress)
 
-  // eslint-disable-next-line
-  const chainID = "phoenix-1" // or any other mainnet or testnet chainID supported by station (e.g. osmosis-1)
   return (
     <>
       {JSON.stringify({ status, wallets }, null, 2)}

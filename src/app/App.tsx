@@ -18,8 +18,11 @@ import NetworkName from "./sections/NetworkName"
 // eslint-disable-next-line
 import IsClassicNetwork from "./sections/IsClassicNetwork"
 import Refresh from "./sections/Refresh"
+// eslint-disable-next-line
 import LPreferences from "./sections/L_Preferences"
+// eslint-disable-next-line
 import NPreferences from "./sections/N_Preferences"
+// eslint-disable-next-line
 import SelectTheme from "./sections/SelectTheme"
 import ConnectWallet from "./sections/ConnectWallet"
 
@@ -30,6 +33,9 @@ import DevTools from "./sections/DevTools"
 
 /* init */
 import InitBankBalance from "./InitBankBalance"
+
+/*  */
+import Settings from "extension/settings/Settings"
 
 const App = () => {
   const { element: routes } = useNav()
@@ -48,9 +54,7 @@ const App = () => {
           <DevTools />
           <section>
             <Refresh />
-            <NPreferences />
-            <LPreferences />
-            <SelectTheme />
+            <Settings />
           </section>
           <ValidatorButton />
           <ConnectWallet />

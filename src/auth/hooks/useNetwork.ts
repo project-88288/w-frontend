@@ -3,6 +3,7 @@ import { useWallet } from "@terra-money/wallet-provider"
 import { useNetworks } from "app/InitNetworks"
 import { sandbox } from "../scripts/env"
 import { getStoredNetwork, storeNetwork } from "../scripts/network"
+import { useNavigate } from "react-router-dom"
 
 const networkState = atom({
   key: "network",
@@ -11,10 +12,12 @@ const networkState = atom({
 
 export const useNetworkState = () => {
   const [network, setNetwork] = useRecoilState(networkState)
+  const navigate = useNavigate()
 
   const changeNetwork = (network: NetworkName) => {
     setNetwork(network)
     storeNetwork(network)
+    navigate("/")
   }
 
   return [network, changeNetwork] as const
@@ -23,8 +26,7 @@ export const useNetworkState = () => {
 /* helpers */
 export const useNetworkOptions = () => {
   const networks = useNetworks()
-
-  if (!sandbox) return
+  // if (!sandbox) return
 
   return Object.values(networks).map(({ name }) => {
     return { value: name, label: name }

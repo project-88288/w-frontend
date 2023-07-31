@@ -40,7 +40,6 @@ const useOnNetworkChange = () => {
 
 const useQueryClient = () => {
   const name = useNetworkName()
-
   return useMemo(() => {
     if (!name) throw new Error()
     return new QueryClient()
